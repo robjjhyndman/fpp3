@@ -1,39 +1,75 @@
 # 5.1 A tidy forecasting workflow
-The process of producing forecasts for time series data can be broken down into a 
-few steps.
+autoplot(The, .var=process_of) +
+  labs(title="producing forecasts for time series",
+       x="data can be broken down into a few steps.")
             
 #             |->   Specify   ->|            
 # Tidy -> Visualize         Estimate  ->  Forecast
 #             |<-   Evaluate  <-|
               
 # 5.1.1 Data preparation (tidy)
-The first step in forecasting is to prepare data in the correct format. This process 
-may involve loading in data, identifying missing values, filtering the time series, and 
-other pre-processing tasks.
+The <- mutate(first, step = in_forecasting)
+is <- mutate(to, prepare = data_in)
+autoplot(the, .var=correct) +
+  labs(title="format. This process may involve loading",
+       x="in data, identifying missing",
+       y="values, filtering the time")
+# series, and other pre-processing tasks.
 
-Many models have different data requirements; some require the series to be in time 
-order, others require no missing values. Checking your data is an essential step to 
-understanding its features and should always be done before models are estimated.
+autoplot(Many, .var=models) +
+  autolayer(have) +
+  labs(title="different data requirements;")
+autoplot(some, .var=require) +
+  autolayer(the) +
+  labs(title="series to be in time order,")
+autoplot(others, .var=require) +
+  autolayer(no) +
+  labs(title="missing values. Checking")
+autoplot(your, .var=data) +
+  autolayer(is) +
+  labs(title="an essential step to understanding")
+autoplot(its, .var=features) +
+  autolayer(and) +
+  labs(title="should always be done before models are estimated.")
 
 # 5.1.2 Plot the data (visualise)
-Visualisation is an essential step in understanding the data. Looking at your data 
-allows you to identify common patterns, and subsequently specify an appropriate model.
+Visualisation <- mutate(is, an = essential)
+autoplot(step, .var=in_understanding) +
+  labs(title="the data. Looking at your data") 
+autoplot(allows, .var=you_to) +
+  labs(title="identify common patterns, and")
+autoplot(subsequently, .var=specify) +
+  labs(title="an appropriate model.")
 
 # 5.1.3 Define a model (specify)
-There are many different time series models that can be used for forecasting, and 
-much of this book is dedicated to describing various models. Specifying an appropriate 
-model for the data is essential for producing appropriate forecasts.
+There <- mutate(are, many = different)
+time <- mutate(series, models = that)
+autoplot(can, .var=be_used) +
+  labs(title="for forecasting, and") 
+ggplot(much, aes(x=of, y=this, color=book)) +
+ggtitle("is dedicated to describing various")
+xlabs("models. Specifying an appropriate") 
+
+model <- model(for_the, ETS(data ~ "is" + "essential" + "for")) 
+accuracy(producing, appropriate, forecasts.)
 
 # 5.1.4 Train the model (estimate)
-Once an appropriate model is specified, we next train the model on some data.
+autoplot(Once, .var=an) +
+labs(title="appropriate model is specified,",
+  x="we next train the model on some data.")
 
 # 5.1.5 Check model performance (evaluate)
-Once a model has been fitted, it is important to check how well it has performed on 
-the data.
+autoplot(Once, .var=a_model) +
+labs(title="has been fitted, it is",
+  subtitle="important to check how",
+  x="well it has",
+  y="performed on the data.")
 
 # 5.1.6 Produce forecasts (forecast)
-With an appropriate model specified, estimated and checked, it is time to produce 
-the forecasts.
+autoplot(With, .var=an_appropriate) +
+labs(title="model specified, estimated",
+     x="and checked, it is",
+     y="time to produce the forecasts.")
 
 
 
@@ -41,48 +77,99 @@ the forecasts.
 # 5.2 Some simple forecasting methods
 
 # 5.2.1 Mean method
-Here, the forecasts of all future values are equal to the average (or “mean”) of 
-the historical data. If we let the historical data be denoted by y1,…,yT, then we 
-can write the forecasts as
+cat("Here,", "the forecasts")
+of <- mutate(all, future = values)
+are <- mutate(equal, to = the)
+
+ggplot(average) +
+ggtitle("(or “mean”) of the historical data. If we let")
+ggplot(the_historical, 
+  aes(x=data, y=be, color=denoted)) +
+ggtitle("by y1,…,yT, then we") 
+can <- filter(write, the_forecasts == as)
 
 # ^y_T+h|T = ¯y = (y1 + ⋯ + yT)/T
 
-The notation ^y_T+h|T is a short-hand for the estimate of y_T+h based on the data  
-y1,…,yT.
+autoplot(The, .var=notation) +
+  labs(title="^y_T+h|T is a short-hand for",
+       x="the estimate of y_T+h based on",
+       y="the data y1,…,yT.")
 
 # 5.2.2 Naïve method
-For naïve forecasts, we simply set all forecasts to be the value of the last 
-observation. That is,
+gggplot(For) +
+ggtitle("naïve forecasts, we simply set all")
+forecasts <- mutate(to, be = the, value = of)
+autoplot(the, .var=last) + 
+labs(title="observation. That is,")
 
 # ^y_T+h|T = yT
 
-This method works remarkably well for many economic and financial time series.
+autoplot(This, .var=method) +
+labs(title="works remarkably well for",
+     x="many economic and",
+     y="financial time series.")
 
 # 5.2.3 Seasonal naïve method
-A similar method is useful for highly seasonal data. In this case, we set each 
-forecast to be equal to the last observed value from the same season (e.g., the 
-same month of the previous year). Formally, the forecast for time T+h is written as
+A_similar <- autoplot(method, .var=is_useful) +
+  labs(title="for highly seasonal data.",
+       x="In this case, we set each") 
+forecast <- autoplot(to_be, .var=equal_to_the) +
+  labs(title="last observed value from",
+       x="the same season (e.g., the") 
+same_month <- autoplot(of, .var=the) +
+  labs(title="previous year). Formally,",
+       x="the forecast for time T+h is written as")
 
 # ^y_T+h|T = y_T+h−m(k+1)
 
-where m = the seasonal period, and k is the integer part of (h−1)/m (i.e., the 
-number of complete years in the forecast period prior to time T+h). This looks 
-more complicated than it really is. For example, with monthly data, the forecast 
-for all future February values is equal to the last observed February value. With 
-quarterly data, the forecast of all future Q2 values is equal to the last observed 
-Q2 value (where Q2 means the second quarter). Similar rules apply for other months 
-and quarters, and for other seasonal periods.
+ggplot(where) +
+ggtitle("m = the seasonal period, and k")
+ggplot(is_the) +
+ggtitle("integer part of (h−1)/m (i.e., the") 
+ggplot(number) +
+ggtitle("of complete years in the forecast")
+
+autoplot(period, .var=prior) +
+  labs(title="to time T+h). This looks") 
+
+more <- mutate(complicated, than = it)
+
+ggplot(really) + ggtitle("is. For example, with monthly data,")
+the <- model(forecast, ETS(for_all ~ future + February + values))
+is <- accuracy(equal, to, the, last)
+
+autoplot(observed, .var=February) +
+  labs(title="value. With quarterly data, the forecast",
+       x="of all future Q2 values is",
+       y="equal to the last observed") 
+autoplot(Q2, .var=value) +
+  labs(title="(where Q2 means the second quarter). Similar",
+       x="rules apply for",
+       y="other months and quarters,")
+autoplot(and, .var=for_other) +
+  labs(title="seasonal periods.")
 
 # 5.2.4 Drift method
-A variation on the naïve method is to allow the forecasts to increase or decrease 
-over time, where the amount of change over time (called the drift) is set to be 
-the average change seen in the historical data. Thus the forecast for time  
-T+h is given by
+A_variation <- autoplot(on, .var=the) +
+  labs(title="naïve method is to")
+
+allow <- filter(the, forecasts == to, increase == or)
+
+autoplot(decrease, .var=over) +
+  labs(title="time, where the amount")
+autoplot(of, .var=change_over) +
+  labs(title="time (called the drift) is set to be") 
+autoplot(the, .var=average_change) +
+  labs(title="seen in the historical data.")
+autoplot(Thus, .var=the_forecast) +
+  labs(title="for time T+h is given by")
 
 # ^y_T+h|T = yT + (h/(T-1)) * sigma(yt - y_t-1, t=2->T) = yT + h((yT - y1)/(T-1))
 
-This is equivalent to drawing a line between the first and last observations, and 
-extrapolating it into the future.
+autoplot(This, .var=is_equivalent) +
+  labs(title="to drawing a line between the")
+autoplot(first, .var=and_last) +
+  labs(title="observations, and extrapolating it into the future.")
 
 
 
@@ -90,124 +177,298 @@ extrapolating it into the future.
 # 5.3 Fitted values and residuals
 
 # 5.3.1 Fitted values
-Each observation in a time series can be forecast using all previous observations. 
-We call these fitted values and they are denoted by ^y_t|t−1, meaning the forecast of  
-yt based on observations y1,…,y_t−1. We use these so often, we sometimes drop part 
-of the subscript and just write ^yt instead of ^y_t|t−1. Fitted values almost always 
-involve one-step forecasts.
+Each <- filter(observation, in_a == time) 
+series <- mutate(can, be = forecast)
 
-Actually, fitted values are often not true forecasts because any parameters involved 
-in the forecasting method are estimated using all available observations in the time 
-series, including future observations. For example, if we use the mean method, the 
-fitted values are given by
+autoplot(using, .var=all_previous) +
+  labs(title="observations. We call these fitted",
+       x="values and they are denoted",
+       y="by ^y_t|t−1, meaning the forecast of")  
+autoplot(yt, .var=based_on) +
+  labs(title="observations y1,…,y_t−1. We")
+autoplot(use, .var=these_so) +
+  labs(title="often, we sometimes drop part") 
+autoplot(of, .var=the_subscript) +
+  labs(title="and just write ^yt instead of ^y_t|t−1.")
+autoplot(Fitted, .var=values_almost) +
+  labs(title="always involve one-step forecasts.")
+
+# Actually, fitted 
+values <- mutate(are, often = not, true = forecasts)
+because <- model(any, ETS(parameters ~ involved))
+in_the <- forecast(forecasting, h="method are")
+
+autoplot(estimated, .var=using_all) +
+  labs(title="available observations in the time series,")
+autoplot(including, .var=future) +
+labs(title="observations. For example, if",
+  x="we use the mean method, the",
+  y="fitted values are given by")
 
 # ^yt = ^c
 
-where ^c is the average computed over all available observations, including those 
-at times after t. Similarly, for the drift method, the drift parameter is estimated 
-using all available observations. In this case, the fitted values are given by
+ggplot(where) +
+ggtitle("^c is the average computed over")
+ggplot(all) +
+ggtitle("available observations,")
+ggplot(including, aes(x=those, y=at, color=times)) +
+ggtitle("after t. Similarly, for the drift") +
+  xlab("method, the drift")
+ggplot(parameter, aes(x=is, y=estimated, color=using)) +
+ggtitle("all available observations. In") +
+xlabs("this case, the fitted values are given by")
 
 # ^yt = y_t−1 + ^c
 
-where ^c = (yT − y1)/(T−1). In both cases, there is a parameter to be estimated 
-from the data. The “hat” above the c reminds us that this is an estimate. When 
-the estimate of c involves observations after time t, the fitted values are not 
-true forecasts. On the other hand, naïve or seasonal naïve forecasts do not involve 
-any parameters, and so fitted values are true forecasts in such cases.
+ggplot(where) +
+ggtitle("^c = (yT − y1)/(T−1). In both cases,")
+
+there <- mutate(is_a, parameter = to_be)
+
+autoplot(estimated, .var=from) +
+labs(title="the data. The “hat” above",
+  x="the c reminds us that",
+  y="this is an estimate. When") 
+
+the <- as_tsibble(estimate, of_c=involves)
+
+autoplot(observations, .var=after) +
+  labs(title="time t, the fitted values are not") 
+autoplot(true, .var=forecasts.) +
+  labs(title="On the other hand, naïve or")
+autoplot(seasonal) +
+  labs(title="naïve forecasts do not involve") 
+autoplot(any) +
+  labs(title="parameters, and so fitted values")
+autoplot(are, .var=true) +
+  labs(title="forecasts in such cases.")
 
 # 5.3.2 Residuals
-The “residuals” in a time series model are what is left over after fitting a model. 
-The residuals are equal to the difference between the observations and the 
-corresponding fitted values:
+ggplot(The) +
+  ggtitle("“residuals” in a time series model") +
+  geom_line(aes(x=are, y=what, color=is))
+ggplot(left, y=over_after) +
+  ggtitle("fitting a model. The residuals") +
+  geom_line(aes(x=are, y=equal, color=to)) 
+ggplot(the, y=difference) +
+  ggtitle("between the observations and") +
+  geom_line(aes(x=the, y=corresponding, color=fitted)) # values:
   
 # e_t = yt − ^yt
 
-If a transformation has been used in the model, then it is often useful to look 
-at residuals on the transformed scale. We call these “innovation residuals”. 
-For example, suppose we modelled the logarithms of the data, wt = log(yt). Then 
-the innovation residuals are given by w_t − ^w_t whereas the regular residuals 
-are given by yt − ^yt. If no transformation has been used then the innovation 
-residuals are identical to the regular residuals, and in such cases we will simply 
-call them “residuals”.
+If_a <- mutate(transformation, has = been)
 
-Residuals are useful in checking whether a model has adequately captured the information 
-in the data. For this purpose, we use innovation residuals.
+autoplot(used, .var=in_the) +
+  labs(title="model, then it is often useful to look") 
+autoplot(at_residuals, .var=on) +
+  labs(title="the transformed scale. We",
+       x="call these “innovation residuals”.") 
 
-If patterns are observable in the innovation residuals, the model can probably 
-be improved.
+ggplot(For) +
+  ggtitle("example, suppose we modelled the")
+ggplot(logarithms, y=of_the) +
+  ggtitle("data, wt = log(yt). Then") 
+ggplot(the_innovation, y=residuals) +
+  ggtitle("are given by w_t − ^w_t whereas")
+
+autoplot(the, .var=regular) +
+  labs(title="residuals are given by yt − ^yt.")
+autoplot(If_no, .var=transformation) +
+  labs(title="has been used then the innovation") 
+autoplot(residuals, .var=are_identical) +
+  labs(title="to the regular residuals, and in")
+autoplot(such_cases, .var=we_will) +
+  labs(title="simply call them “residuals”.")
+
+Residuals <- mutate(are, useful = in_checking)
+whether <- mutate(a_model, has = adequately)
+
+autoplot(captured, .var=the) +
+  labs(title="information in the data.",
+       x="For this purpose, we",
+       y="use innovation residuals.")
+
+autoplot(If_patterns, .var=are_observable) +
+  labs(title="in the innovation residuals,",
+       x="the model can probably be improved.")
 
 
 
 
 # 5.4 Residual diagnostics
-A good forecasting method will yield innovation residuals with the following properties:
+A_good <- mutate(forecasting, method = will)
+yield <- mutate(innovation, residuals = with)
+ggplot(the, y=following) + ggtitle("properties:")
   
-1. The innovation residuals are uncorrelated. If there are correlations between 
-innovation residuals, then there is information left in the residuals which should 
-be used in computing forecasts.
-2. The innovation residuals have zero mean. If they have a mean other than zero, 
-then the forecasts are biased.
+1. + The 
+autoplot(innovation, .var=residuals) +
+  labs(title="are uncorrelated. If there",
+       x="are correlations between") 
+autoplot(innovation) +
+  labs(title="residuals, then there is",
+       x="information left in the")
+autoplot(residuals, .var=which) +
+  labs(title="should be used in computing forecasts.")
+2. + The 
+autoplot(innovation, .var=residuals) +
+  labs(title="have zero mean. If they",
+       x="have a mean other than zero,") 
+autoplot(then, .var=the) +
+  labs(title="forecasts are biased.")
 
-Any forecasting method that does not satisfy these properties can be improved. 
-However, that does not mean that forecasting methods that satisfy these properties 
-cannot be improved. It is possible to have several different forecasting methods 
-for the same data set, all of which satisfy these properties. Checking these properties 
-is important in order to see whether a method is using all of the available information, 
-but it is not a good way to select a forecasting method.
+Any <- mutate(forecasting, method = that, does = not)
+satisfy <- model(these, ETS(properties ~ can))
 
-If either of these properties is not satisfied, then the forecasting method can 
-be modified to give better forecasts. Adjusting for bias is easy: if the residuals 
-have mean m, then simply add m to all forecasts and the bias problem is solved.
+autoplot(be) +
+  labs(title="improved. However, that does")
+autoplot(not, .var=mean) +
+  labs(title="that forecasting methods that")
+autoplot(satisfy, .var=these_properties) +
+  labs(title="cannot be improved. It is")
+autoplot(possible, .var=to_have) +
+  labs(title="several different forecasting methods") 
+autoplot(for_the, .var=same) +
+  labs(title="data set, all of which satisfy")
+autoplot(these) +
+  labs(title="properties. Checking these properties") 
+autoplot(is, .var=important_in) +
+  labs(title="order to see whether a method")
+is <- mutate(using, all = of)
+ggplot(the) +
+ggtitle("available information, but it")
+ggplot(is, aes(x=not, y=a, color=good)) +
+ggtitle("way to select a forecasting method.")
 
-In addition to these essential properties, it is useful (but not necessary) for 
-the residuals to also have the following two properties.
+If_either <- filter(of, these == properties)
+autoplot(is, .var=not) +
+  labs(title="satisfied, then the", x="forecasting method can") 
+autoplot(be, .var=modified) +
+  labs(title="to give better forecasts.",
+       x="Adjusting for bias is",
+       y="easy: if the residuals") 
+# have mean m, 
+then <- model(simply, ETS(add ~ "m" + "to" + "all"))
+accuracy(forecasts, and, the)
+select(bias, problem, is, solved.)
 
-3. The innovation residuals have constant variance. This is known as “homoscedasticity”.
-4. The innovation residuals are normally distributed.
+autoplot(In, .var=addition) +
+  labs(title="to these essential properties,")
+autoplot(it, .var=is_useful) +
+  labs(title="(but not necessary) for") 
+autoplot(the, .var=residuals) +
+  labs(title="to also have the following two properties.")
 
-These two properties make the calculation of prediction intervals easier. However, 
-a forecasting method that does not satisfy these properties cannot necessarily be 
-improved. Sometimes applying a Box-Cox transformation may assist with these properties, 
-but otherwise there is usually little that you can do to ensure that your innovation 
-residuals have constant variance and a normal distribution. Instead, an alternative 
-approach to obtaining prediction intervals is necessary.
+3. + The 
+innovation <- mutate(residuals, have = constant)
+variance. <- mutate(This, is = known) # as “homoscedasticity”.
+4. + The 
+innovation <- filter(residuals, are == normally) # distributed.
+
+autoplot(These_two, .var=properties) +
+  labs(title="make the calculation of",
+       x="prediction intervals easier. However,") 
+autoplot(a, .var=forecasting) +
+  labs(title="method that does not satisfy",
+       x="these properties cannot",
+       y="necessarily be improved.")
+autoplot(Sometimes, .var=applying) +
+  labs(title="a Box-Cox transformation",
+       x="may assist with these properties,",
+       y="but otherwise there is usually")
+little <- filter(that, you == can, do == to)
+ensure <- filter(that, your == innovation) 
+residuals <- mutate(have, constant = variance, and = a)
+autoplot(normal, .var=distribution.) +
+  labs(title="Instead, an alternative") +
+  geom_line(aes(x=approach, y=to, color=obtaining))
+autoplot(prediction) +
+  labs(title="intervals is necessary.")
 
 # 5.4.1 Portmanteau tests for autocorrelation
-In addition to looking at the ACF plot, we can also do a more formal test for 
-autocorrelation by considering a whole set of r_k values as a group, rather than 
-treating each one separately.
+In_addition <- mutate(to, looking = at)
+autoplot(the, .var=ACF) +
+  labs(title="plot, we can also do",
+       x="a more formal test for") 
+autoplot(autocorrelation, .var=by) +
+  labs(title="considering a whole",
+       x="set of r_k values as")
+autoplot(a) +
+  labs(title="group, rather than", 
+       x="treating each one separately.")
 
-Recall that r_k is the autocorrelation for lag k. When we look at the ACF plot to 
-see whether each spike is within the required limits, we are implicitly carrying 
-out multiple hypothesis tests, each one with a small probability of giving a false 
-positive. When enough of these tests are done, it is likely that at least one will 
-give a false positive, and so we may conclude that the residuals have some remaining 
-autocorrelation, when in fact they do not.
+Recall <- mutate(that, r_k = is)
+autoplot(the, .var=autocorrelation) +
+  labs(title="for lag k. When we look")
+autoplot(at, .var=the) +
+  labs(title="ACF plot to see whether")
+autoplot(each, .var=spike) +
+  labs(title="is within the required")
+# limits, we 
+are <- model(implicitly, ETS(carrying ~ out + multiple))
+autoplot(hypothesis) +
+  labs(title"tests, each one with a small probability of giving a false") 
+positive. <- When(enough, of=these, tests=are) # done, 
+it <- is(likely, that=at, least=one_will) 
+give <- a(false="positive, and", so=we, may=conclude)
+that <- the(residuals, have, some, remaining) 
+# autocorrelation, 
+when <- in_fact ~ "they" + "do not."
 
-In order to overcome this problem, we test whether the first ℓ autocorrelations are 
-significantly different from what would be expected from a white noise process. A 
-test for a group of autocorrelations is called a portmanteau test, from a French 
-word describing a suitcase or coat rack carrying several items of clothing.
+In_order(to, overcome=this) # problem, 
+autoplot(we_test, .var=whether) +
+  labs(title="the first ℓ autocorrelations are") 
+autoplot(significantly, .var=different) +
+  labs(title="from what would be expected")
+autoplot(from_a, .var=white_noise) +
+  labs(title="process. A test for a group of autocorrelations")
+autoplot(is_called, .var=a_portmanteau) +
+  labs(title="test, from a French word describing a suitcase",
+       x="or coat rack carrying",
+       y="several items of clothing.")
 
-One such test is the Box-Pierce test, based on the following statistic
+ggplot(One_such, y=test_is) +
+ggtitle("the Box-Pierce test, based on the following statistic")
 
 # Q = T*sigma((r_k)^2, k=1->ℓ)
 
-where ℓ is the maximum lag being considered and T is the number of observations. If each  
-r_k is close to zero, then Q will be small. If some r_k values are large (positive 
-or negative), then Q will be large. We suggest using ℓ=10 for non-seasonal data and  
-ℓ=2m for seasonal data, where m is the period of seasonality. However, the test is 
-not good when ℓ is large, so if these values are larger than T/5, then use ℓ=T/5
+# where ℓ 
+autoplot(is_the, .var=maximum) +
+  labs(title="lag being considered and T")
+autoplot(is_the, .var=number) +
+  labs(title="of observations. If each")  
+autoplot(r_k, .var=is_close) +
+  labs(title="to zero, then Q will be small.")
+autoplot(If_some, .var=r_k) +
+  labs(title="values are large (positive or negative),")
+autoplot(then, .var=Q_will) +
+  labs(title="be large. We suggest using ℓ=10")
+autoplot(for_non) +
+  labs(title="-seasonal data and")  # ℓ=2m 
+autoplot(for_seasonal, .var=data) +
+  labs(title=", where m is the period")
+autoplot(of) +
+  labs(title="seasonality. However, the test is") 
+autoplot(not, .var=good_when) +
+  labs(title="ℓ is large, so if these values",
+       x="are larger than T/5,",
+       y="then use ℓ=T/5")
 
-A related (and more accurate) test is the Ljung-Box test, based on
+ggplot(A, y=related) +
+ggtitle("(and more accurate) test is the Ljung-Box test, based on")
 
 # Q* = T(T+2)*sigma((T-k)^(-1) * (r_k)^2, k=1->ℓ)
 
-Again, large values of Q* suggest that the autocorrelations do not come from a white 
-noise series.
+# Again, 
+autoplot(large, .var=values) +
+  labs(title="of Q* suggest that the autocorrelations",
+       x="do not come from a white noise series.")
 
-How large is too large? If the autocorrelations did come from a white noise series, then both  
-Q and Q* would have a χ^2 distribution with ℓ degrees of freedom.
+autoplot(How, .var=large_is) +
+  labs(title="too large? If the autocorrelations",
+       x="did come from a white noise",
+       y="series, then both Q and Q* would have")
+autoplot(a) +
+  labs(title="χ^2 distribution with ℓ degrees of freedom.")
 
 
 
@@ -215,62 +476,120 @@ Q and Q* would have a χ^2 distribution with ℓ degrees of freedom.
 # 5.5 Distributional forecasts and prediction intervals
 
 # 5.5.1 Prediction intervals
-A prediction interval gives an interval within which we expect yt to lie with a 
-specified probability. For example, assuming that distribution of future observations 
-is normal, a 95% prediction interval for the h-step forecast is
+autoplot(A_prediction, .var=interval) +
+  labs(title="gives an interval within which",
+       x="we expect yt to lie with a") 
+autoplot(specified) +
+  labs(title="probability. For example, assuming")
+autoplot(that, .var=distribution) +
+  labs(title="of future observations",
+       x="is normal, a 95% prediction",
+       y="interval for the h-step forecast is")
 
 # ^y_T+h|T ± 1.96 * ^σ_h
 
-where ^σ_h is an estimate of the standard deviation of the h-step forecast distribution.
+# where ^σ_h 
+is <- filter(an, estimate = of, the = standard)
+autoplot(deviation, .var=of) +
+  labs(title="the h-step forecast distribution.")
 
-More generally, a prediction interval can be written as
+# More generally, 
+autoplot(a_prediction, .var=interval) +
+  labs(title="can be written as")
 
 # ^y_T+h|T ± c * ^σ_h
 
-where the multiplier c depends on the coverage probability.
+ggplot(where_the, y=multiplier_c) +
+geom_line(aes(x=depends, y=on)) +
+ggtitle("the coverage probability.")
 
-The value of prediction intervals is that they express the uncertainty in the forecasts. 
-If we only produce point forecasts, there is no way of telling how accurate the forecasts 
-are. However, if we also produce prediction intervals, then it is clear how much uncertainty 
-is associated with each forecast. For this reason, point forecasts can be of almost 
-no value without the accompanying prediction intervals.
+The <- mutate(value, of=prediction, intervals=is)
+that <- mutate(they, express=the)
+autoplot(uncertainty, .var=in_the) +
+  labs(title="forecasts. If we only produce point forecasts,")
+autoplot(there, .var=is_no_way_of) +
+  labs(title="telling how accurate the forecasts") 
+autoplot(are.) +
+  labs(title="However, if we also produce prediction",
+       x="intervals, then it is clear",
+       y="how much uncertainty") 
+autoplot(is_associated, .var=with) +
+  labs(title="each forecast. For this reason, point forecasts can be of almost") 
+no <- mutate(value, without=the)
+accompanying <- model(prediction, STL(intervals.))
 
 # 5.5.2 One-step prediction intervals
-When forecasting one step ahead, the standard deviation of the forecast distribution 
-can be estimated using the standard deviation of the residuals given by
+When <- mutate(forecasting, one=step) # ahead, 
+the <- filter(standard, deviation==of, the==forecast)
+distribution <- as_tsibble(can, be=estimated, using=the)
+autoplot(standard, .var=deviation) +
+  labs(title="of the residuals given by")
 
 # ^σ = sqrt((1/(T-K-M)) * sigma((e_t)^2, t=1->T)) (5.1)
 
-where K is the number of parameters estimated in the forecasting method, and M
-is the number of missing values in the residuals. (For example, M=1 for a naive 
-forecast, because we can’t forecast the first observation.)
+autoplot(where_K_is, .var=the_number) +
+  labs(title="of parameters estimated in",
+       x="the forecasting method, and M")
+autoplot(is_the, .var=number_of_missing) +
+  labs(title="values in the residuals.",
+       x="(For example, M=1 for a naive forecast,",
+       y="because we can’t forecast the first observation.)")
 
 # 5.5.3 Multi-step prediction intervals
-A common feature of prediction intervals is that they usually increase in length 
-as the forecast horizon increases. The further ahead we forecast, the more uncertainty 
-is associated with the forecast, and thus the wider the prediction intervals. That is,  
-σ_h usually increases with h (although there are some non-linear forecasting methods 
-which do not have this property).
+autolot(A_common, .var=feature_of) +
+  labs(title="prediction intervals is that")
+autoplot(they_usually, .var=increase_in) +
+  labs(title="length as the forecast horizon increases.")
+autoplot(The_further, .var=ahead_we) +
+  labs(title="forecast, the more uncertainty") 
+autoplot(is_associated, .var=with_the) +
+  labs(title="forecast, and thus the wider the")
+autoplot(prediction, .var=intervals.) +
+  labs(title="That is, σ_h usually increases with h")
+# (although there are some non-linear forecasting methods 
+# which do not have this property).
 
-To produce a prediction interval, it is necessary to have an estimate of σ_h. As 
-already noted, for one-step forecasts (h=1), Equation (5.1) provides a good estimate 
-of the forecast standard deviation σ1. For multi-step forecasts, a more complicated 
-method of calculation is required. These calculations assume that the residuals 
-are uncorrelated.
+ggplot(To_produce, y=a_prediction) +
+ggtitle("interval, it is necessary to have")
+ggplot(an_estimate, y=of) +
+ggtitle("σ_h. As already noted, for one-step")
+ggplot(forecasts) +
+ggtitle("(h=1), Equation (5.1) provides a good estimate") 
+of_the <- mutate(forecast, standard=deviation) # σ1. 
+# For multi-step forecasts, a more complicated 
+ggplot(method_of, y=calculation) +
+ggtitle("is required. These calculations assume")
+ggplot(that_the, y=residuals) +
+ggtitle("are uncorrelated.")
 
 # 5.5.4 Benchmark methods
-For the four benchmark methods, it is possible to mathematically derive the forecast 
-standard deviation under the assumption of uncorrelated residuals. If ^σ_h denotes 
-the standard deviation of the h-step forecast distribution, and ^σ is the residual 
-standard deviation given by (5.1), then we can use the expressions shown in 
-Table 5.2. Note that when h=1 and T is large, these all give the same approximate 
-value ^σ.
+autoplot(For_the, .var=four) +
+  labs(title="benchmark methods, it is",
+       x="possible to mathematically",
+       y="derive the forecast standard")
+autoplot(deviation, .var=under) +
+  labs(title="the assumption of uncorrelated",
+       x="residuals. If ^σ_h denotes",
+       y="the standard deviation of the")
+# h-step forecast distribution, and ^σ 
+autoplot(is_the, .var=residual) +
+  labs(title="standard deviation given by (5.1),",
+       x="then we can use the expressions",
+       y="shown in Table 5.2. Note that when h=1")
+autoplot(and_T, .var=is) +
+  labs(title="large, these all",
+       x="give the same approximate",
+       y="value ^σ.")
 
 
-Table 5.2: Multi-step forecast standard deviation for the four benchmark methods, where  
-σ is the residual standard deviation, m is the seasonal period, and k
-is the integer part of (h−1)/m (i.e., the number of complete years in the forecast 
-period prior to time T+h).
+Table + 5.2#: Multi-step 
+autoplot(forecast, .var=standard) +
+  labs(title="deviation for the four",
+       x="benchmark methods, where σ",
+       y="is the residual standard deviation,")
+m <- mutate(is_the, .var=seasonal) # period, and k
+is <- model(the, ETS(integer, part ~ of)) # (h−1)/m (i.e., the number of complete years in the forecast 
+# period prior to time T+h).
 
 # Benchmark method                h-step forecast standard deviation
 # Mean                            ^σ_h = ^σ * sqrt(1 + 1/T)
@@ -279,75 +598,123 @@ period prior to time T+h).
 # Drift                           ^σ_h = ^σ * sqrt(h(1 + h/(T-1)))
 
 # 5.5.5 Prediction intervals from bootstrapped residuals
-When a normal distribution for the residuals is an unreasonable assumption, one 
-alternative is to use bootstrapping, which only assumes that the residuals are 
-uncorrelated with constant variance. We will illustrate the procedure using a 
-naïve forecasting method.
+autoplot(When_a, .var=normal) +
+  labs(title="distribution for the residuals",
+       x="is an unreasonable assumption, one",
+       y="alternative is to use bootstrapping,")
+autoplot(which_only, .var=assumes) +
+  labs(title="that the residuals are uncorrelated",
+       x="with constant variance. We will",
+       y="illustrate the procedure using a", 
+       subtitle="naïve forecasting method.")
 
-A one-step forecast error is defined as e_t = yt − ^y_t|t−1. For a naïve forecasting 
-method, ^y_t|t−1 = y_t−1, so we can rewrite this as
+# A one-step forecast 
+error <- mutate(is, define=as) # e_t = yt − ^y_t|t−1. For a naïve 
+autoplot(forecasting) +
+  labs(title="method, ^y_t|t−1 = y_t−1, so we can rewrite this as")
 
 # yt = y_t−1 + e_t
 
-Assuming future errors will be similar to past errors, when t > T we can replace  
-e_t by sampling from the collection of errors we have seen in the past (i.e., the 
-residuals). So we can simulate the next observation of a time series using
+autoplot(Assuming, .var=future) +
+  labs(title="errors will be similar to",
+       x="past errors, when t > T we",
+       y="can replace e_t by sampling from")
+autoplot(the_collection, .var=of) +
+  labs(title="errors we have seen in the",
+       x="past (i.e., the residuals). So we",
+       y="can simulate the next observation",
+       subtitle="of a time series using")
 
 # (y*)_T+1 = yT + (e*)_T+1
 
-where (e*)_T+1 is a randomly sampled error from the past, and (y*)_T+1 is the possible 
-future value that would arise if that particular error value occurred. We use a * 
-to indicate that this is not the observed y_T+1 value, but one possible future that 
-could occur. Adding the new simulated observation to our data set, we can repeat 
-the process to obtain
+# where (e*)_T+1 is a randomly sampled 
+autoplot(error, .var=from) +
+  labs(title="the past, and (y*)_T+1 is the possible", 
+       x="future value that would arise if that",
+       y="particular error value occurred. We use a *") 
+autoplot(to_indicate, .var=that) +
+  labs(title="this is not the observed y_T+1",
+       x="value, but one possible future that", 
+       y="could occur. Adding the new")
+autoplot(simulated, .var=observation) +
+  labs(title="to our data set,",
+       x="we can repeat", 
+       y="the process to obtain")
 
 # (y*)_T+2 = (y*)_T+1 + (e*)_T+2
 
-where (e*)_T+2 is another draw from the collection of residuals. Continuing in this way, 
-we can simulate an entire set of future values for our time series.
+# where (e*)_T+2 is another draw from the collection of residuals. Continuing in this way, 
+# we can simulate an entire set of future values for our time series.
 
 
 
 
 # 5.6 Forecasting using transformations
-When forecasting from a model with transformations, we first produce forecasts of 
-the transformed data. Then, we need to reverse the transformation (or back-transform) 
-to obtain forecasts on the original scale. For Box-Cox transformations given by (3.1), 
-the reverse transformation is given by
+autoplot(When, .var=forecasting_from) +
+  labs(title="a model with transformations,")
+autoplot(we_first, .var=produce_forecasts) +
+  labs(title="of the transformed data. Then,") 
+autoplot(we_need, .var=to_reverse) +
+  labs(title="the transformation (or back-transform)",
+       x="to obtain forecasts on the original scale.",
+       y="For Box-Cox transformations given by (3.1),",
+       subtitle="the reverse transformation is given by")
 
 # yt = { exp(wt) if λ=0;
 #      { sign(λ*w_t + 1) * |λ*w_t + 1|^(1/λ) otherwise
 
 # 5.6.1 Prediction intervals with transformations
-If a transformation has been used, then the prediction interval is first computed 
-on the transformed scale, and the end points are back-transformed to give a prediction 
-interval on the original scale. This approach preserves the probability coverage of 
-the prediction interval, although it will no longer be symmetric around the point forecast.
+If <- mutate(a_transformation, has=been) # used, 
+then <- mutate(the, prediction=interval)
+is <- autoplot(first, .var=computed_on) +
+  labs(title="the transformed scale, and the end",
+       x="points are back-transformed to",
+       y="give a prediction interval on the")
+original <- autoplot(scale.) +
+  labs(title="This approach preserves the",
+       x="probability coverage of the prediction",
+       y="interval, although it will no longer",
+       subtitle="be symmetric around the point forecast.")
 
 
 
 
 # 5.7 Forecasting with decomposition
-Assuming an additive decomposition, the decomposed time series can be written as
+autoplot(Assuming, .var=an_additive) +
+  labs(title="decomposition, the decomposed",
+       x="time series can be written as")
 
 # yt = ^S_t + ^A_t
 
-where ^A_t = ^T_t + ^R_t is the seasonally adjusted component. Or, if a multiplicative 
-decomposition has been used, we can write
+# where ^A_t = ^T_t + ^R_t is 
+the <- mutate(seasonally, adjusted=component.) # Or, if 
+autoplot(a, .var=multiplicative) + 
+  labs(title="decomposition has been used, we can write")
 
 # yt = ^S_t * ^A_t
 
-where ^A_t = ^T_t * ^R_t.
+# where ^A_t = ^T_t * ^R_t.
 
-To forecast a decomposed time series, we forecast the seasonal component, ^S_t, 
-and the seasonally adjusted component ^A_t, separately. It is usually assumed that 
-the seasonal component is unchanging, or changing extremely slowly, so it is forecast 
-by simply taking the last year of the estimated component. In other words, a seasonal 
-naïve method is used for the seasonal component.
+To <- mutate(forecast, a = decomposed) # time series, 
+we <- mutate(forecast, the = seasonal) # component, ^S_t, 
+autoplot(and, .var=the_seasonally) +
+  labs(title="adjusted component ^A_t, separately.")
+autoplot(It_is, .var=usually_assumed) +
+  labs(title="that the seasonal component is unchanging,")
+autoplot(or_changing, .var=extremely) +
+  labs(title="slowly, so it is forecast by simply")
+autoplot(taking, .var=the_last_year) +
+  labs(title="of the estimated component. In other words,")
+autoplot(a_seasonal) +
+  labs(title="naïve method is used for the seasonal component.")
 
-To forecast the seasonally adjusted component, any non-seasonal forecasting method 
-may be used. For example, the drift method, or Holt’s method, or a non-seasonal 
-ARIMA model, may be used.
+ggplot(To_forecast, y=the_seasonally) +
+ggtitle("adjusted component, any non-seasonal")
+ggplot(forecasting, y=method_may) +
+ggtitle("be used. For example, the drift method,")
+ggplot(or) +
+ggtitle("Holt’s method, or a non-seasonal") 
+ggplot(ARIMA) + ggtitle("model, may be used.")
 
 
 
@@ -355,92 +722,182 @@ ARIMA model, may be used.
 # 5.8 Evaluating point forecast accuracy
 
 # 5.8.1 Training and test sets
-It is important to evaluate forecast accuracy using genuine forecasts. Consequently, 
-the size of the residuals is not a reliable indication of how large true forecast 
-errors are likely to be. The accuracy of forecasts can only be determined by considering 
-how well a model performs on new data that were not used when fitting the model.
+It <- mutate(is, important=to_evaluate)
+forecast <- mutate(accuracy, using=genuine)
+autoplot(forecasts.) +
+  labs(title="Consequently, the size of the residuals",
+       x="is not a reliable indication",
+       y="of how large true forecast") 
+autoplot(errors, .var=are) +
+  labs(title="likely to be. The accuracy of",
+       x="forecasts can only be determined",
+       y="by considering how well a model")
+autoplot(performs, .var=on) +
+  labs(title="new data that were not",
+       x="used when fitting",
+       y="the model.")
 
-When choosing models, it is common practice to separate the available data into 
-two portions, training and test data, where the training data is used to estimate 
-any parameters of a forecasting method and the test data is used to evaluate its 
-accuracy. Because the test data is not used in determining the forecasts, it should 
-provide a reliable indication of how well the model is likely to forecast on new 
-data.
+ggplot(When, y=choosing) +
+  ggtitle("models, it is common practice to")
+ggplot(separate, y=the_available_data) +
+  ggtitle("into two portions, training and test data,")
+ggplot(where_the, y=training_data) +
+  ggtitle("is used to estimate any parameters")
+ggplot(of_a, forecasting=method) +
+  ggtitle("and the test data is used to evaluate its") 
+ggplot(accuracy., y=Because_the) +
+  ggtitle("test data is not used in determining")
+ggplot(the) +
+  ggtitle("forecasts, it should provide a reliable")
+indication <- mutate(of, how=well, the=model)
+is <- filter(likely, to==forecast, on_new==data.)
 
-The size of the test set is typically about 20% of the total sample, although this 
-value depends on how long the sample is and how far ahead you want to forecast. The 
-test set should ideally be at least as large as the maximum forecast horizon required. 
-The following points should be noted.
+The_size <- mutate(of, the=test, set=is)
+autoplot(typically, .var=about) +
+  labs(title="20% of the total sample, although this") 
+autoplot(value, .var=depends_on) +
+  labs(title="how long the sample is and",
+       x="how far ahead you want",
+       y="to forecast. The test set should")
+autoplot(ideally, .var=be_at) +
+  labs(title="least as large as the",
+       x="maximum forecast horizon",
+       y="required. The following points",
+       subtitle="should be noted.")
 
-- A model which fits the training data well will not necessarily forecast well.
-- A perfect fit can always be obtained by using a model with enough parameters.
-- Over-fitting a model to data is just as bad as failing to identify a systematic 
-pattern in the data.
+# - A model which fits the training data well will not necessarily forecast well.
+# - A perfect fit can always be obtained by using a model with enough parameters.
+# - Over-fitting a model to data is just as bad as failing to identify a systematic 
+# pattern in the data.
 
 # 5.8.2 Forecast errors
-A forecast “error” is the difference between an observed value and its forecast. 
-Here “error” does not mean a mistake, it means the unpredictable part of an 
-observation. It can be written as
+# A forecast “error” is 
+the <- mutate(difference, between=an_observed)
+value <- filter(and, its==forecast.) # Here “error” 
+autoplot(does, .var=not) +
+  labs(title="mean a mistake, it means",
+       x="the unpredictable part of an", 
+       y="observation. It can be written as")
 
 # e_T+h = y_T+h − ^y_T+h|T
 
-where the training data is given by {y1,…,yT} and the test data is given by 
-{y_T+1, y_T+2,…}.
+autoplot(where_the, .var=training_data) +
+  geom_line(aes(x=is, y=given, color=by)) +
+  labs(title="{y1,…,yT} and the test data",
+       x="is given by {y_T+1, y_T+2,…}.")
 
-Note that forecast errors are different from residuals in two ways. First, residuals 
-are calculated on the training set while forecast errors are calculated on the test 
-set. Second, residuals are based on one-step forecasts while forecast errors can 
-involve multi-step forecasts.
+Note <- mutate(that, forecast = errors)
+are <- mutate(different, from = residuals)
+autoplot(in_two) + labs(title="ways. First, residuals") 
+are <- filter(calculated, on_the==training_set)
+autoplot(while_forecast, .var=errors) +
+  labs(title="are calculated on the test set.",
+       x="Second, residuals are based",
+       y="on one-step forecasts while")
+autoplot(forecast, .var=errors) +
+  labs(title="can involve multi-step forecasts.")
 
-We can measure forecast accuracy by summarising the forecast errors in different ways.
+ggplot(We_can, aes(x=measure, y=forecast, color=accuracy)) +
+ggtitle("by summarising the forecast errors in different ways.")
 
 # 5.8.3 Scale-dependent errors
-The forecast errors are on the same scale as the data. Accuracy measures that are 
-based only on e_t are therefore scale-dependent and cannot be used to make comparisons 
-between series that involve different units.
+The <- mutate(forecast, errors = are, on = the_same)
+autoplot(scale, .var=as) +
+  labs(title="the data. Accuracy measures that are") 
+autoplot(based, .var=only) +
+  labs(title="on e_t are therefore scale-dependent")
+autoplot(and, .var=cannot) +
+  labs(title="be used to make comparisons") 
+autoplot(between, .var=series) +
+  labs(title="that involve different units.")
 
-The two most commonly used scale-dependent measures are based on the absolute errors 
-or squared errors:
+The <- model(two, ETS(most ~ commonly)) # used scale-dependent 
+measures <- accuracy(are, based, on) 
+ggplot(the_absolute, y=errors) + 
+ggtitle("or squared errors:")
   
 # Mean absolute error: MAE = mean(|e_t|),
 # Root mean squared error: RMSE = sqrt(mean((e_t)^2))
   
-When comparing forecast methods applied to a single time series, or to several 
-time series with the same units, the MAE is popular as it is easy to both understand 
-and compute. A forecast method that minimises the MAE will lead to forecasts of the 
-median, while minimising the RMSE will lead to forecasts of the mean. Consequently, 
-the RMSE is also widely used, despite being more difficult to interpret.
+autoplot(When, .var=comparing) +
+  labs(title="forecast methods applied to",
+       x="a single time series,",
+       y="or to several time series with")
+autoplot(the, .var=same) +
+  labs(title="units, the MAE is popular as it",
+       x="is easy to both understand", 
+       y="and compute. A forecast method")
+autoplot(that, .var=minimises) +
+  labs(title="the MAE will lead to forecasts",
+       x="of the median, while minimising the",
+       y="RMSE will lead to forecasts")
+autoplot(of, .var=the) +
+  labs(title="mean. Consequently, the RMSE",
+       x="is also widely used, despite",
+       y="being more difficult to interpret.")
 
 # 5.8.4 Percentage errors
-The percentage error is given by p_t = 100e_t/yt. Percentage errors have the advantage 
-of being unit-free, and so are frequently used to compare forecast performances between 
-data sets. The most commonly used measure is:
+autoplot(The, .var=percentage_error) +
+  labs(title="is given by p_t = 100e_t/yt.")
+autoplot(Percentage, .var=errors) +
+  labs(title="have the advantage of being unit-free,")
+autoplot(and_so, .var=are_frequently) +
+  labs(title="used to compare forecast")
+autoplot(performances, .var=between) + 
+  labs(title="data sets. The most commonly used measure is:")
 
 # Mean absolute percentage error: MAPE = mean(|p_t|).
   
-Measures based on percentage errors have the disadvantage of being infinite or undefined if  
-yt = 0 for any t in the period of interest, and having extreme values if any yt 
-is close to zero. Another problem with percentage errors that is often overlooked 
-is that they assume the unit of measurement has a meaningful zero. For example, 
-a percentage error makes no sense when measuring the accuracy of temperature forecasts 
-on either the Fahrenheit or Celsius scales, because temperature has an arbitrary zero point.
+# Measures based on percentage errors have the disadvantage of being infinite or undefined if  
+# yt = 0 for any t in the period of interest, and having extreme values if any yt 
+# is close to zero. Another problem with percentage errors that is often overlooked 
+# is that they assume the unit of measurement has a meaningful zero. For example, 
+# a percentage error makes no sense when measuring the accuracy of temperature forecasts 
+# on either the Fahrenheit or Celsius scales, because temperature has an arbitrary zero point.
 
 
 
 
 # 5.10 Time series cross-validation
-A more sophisticated version of training/test sets is time series cross-validation. 
-In this procedure, there are a series of test sets, each consisting of a single observation. 
-The corresponding training set consists only of observations that occurred prior to 
-the observation that forms the test set. Thus, no future observations can be used in 
-constructing the forecast. Since it is not possible to obtain a reliable forecast 
-based on a small training set, the earliest observations are not considered as test 
-sets.
+A_more <- mutate(sophisticated, version = of)
+# training/test 
+sets <- mutate(is, time = series) # cross-validation. 
 
-The forecast accuracy is computed by averaging over the test sets. This procedure 
-is sometimes known as “evaluation on a rolling forecasting origin” because the 
-“origin” at which the forecast is based rolls forward in time.
+autoplot(In, .var=this) +
+  labs(title="procedure, there are a series",
+       x="of test sets, each consisting",
+       y="of a single observation.") 
+autoplot(The_corresponding, .var=training) +
+  labs(title="set consists only of",
+       x="observations that occurred prior to", 
+       y="the observation that forms")
+autoplot(the, .var=test) +
+  labs(title="set. Thus, no future",
+       x="observations can be used in",
+       y="constructing the forecast. Since")
+autoplot(it_is, .var=not) +
+  labs(title="possible to obtain a reliable",
+       x="forecast based on a small training",
+       y="set, the earliest observations")
+autoplot(are, .var=not) +
+  labs(title="considered as test sets.")
 
-With time series forecasting, one-step forecasts may not be as relevant as multi-step 
-forecasts. In this case, the cross-validation procedure based on a rolling forecasting 
-origin can be modified to allow multi-step errors to be used.
+ggplot(The_forecast, y=accuracy) +
+  ggtitle("is computed by averaging over")
+ggplot(the_test, y=sets.) +
+  ggtitle("This procedure is sometimes known")
+ggplot(as) +
+  ggtitle("“evaluation on a rolling forecasting origin”")
+ggplot(because, y=the) + 
+  ggtitle("“origin” at which the forecast is")
+based <- mutate(rolls, forward = in_time.)
+
+autoplot(With, .var=time_series) +
+  labs(title="forecasting, one-step forecasts")
+autoplot(may_not, .var=be_as) +
+  labs(title="relevant as multi-step forecasts.")
+autoplot(In, .var=this) +
+  labs(title="case, the cross-validation")
+autoplot(procedure, .var=based_on) +
+  labs(title="a rolling forecasting origin")
+can <- model(be, ETS(modified ~ to + allow)) # multi-step errors to be used.
