@@ -450,3 +450,202 @@ autoplot(Hstart_fc, Hstart_model_1,level = NULL) +
 accTable <- accuracy(Hstart_fc,testset)
 select(accTable,.model,RMSE,MAE,MAPE)
 
+
+
+
+
+
+
+rm(list=ls())
+Sys.setlocale(locale = "English")
+Sys.setenv("LANGUAGE" = "en")
+library(fpp3)
+library(tidyquant)
+
+# 1 (a)
+
+GEdata <- tq_get("GE",get="stock.prices",from="2024-06-01",to="2024-11-10")
+temp1 <- select(GEdata,"date","close")
+GEtsib <- as_tsibble(temp1, index = date)
+autoplot(GEtsib,close)
+GE <- mutate(GEtsib, day = row_number())
+GE_stock <- update_tsibble(GE, index = day, regular = TRUE)
+GE_fit <- model(GE_stock,Naive = NAIVE(close),
+                Drift = RW(close ~ drift()))
+GE_cv <- stretch_tsibble(GE_stock, .init = 3, .step = 1)
+foreNAIVE <- forecast(model(GE_cv, NAIVE(close)), h = 1)
+foreDRIFT <- forecast(model(GE_cv, RW(close ~ drift())), h = 1)
+accNaive = select(accuracy(foreNAIVE, GE_stock),.model,RMSE)
+accDrift = select(accuracy(foreDRIFT, GE_stock),.model,RMSE)
+print(accNaive)
+print(accDrift)
+
+# (b)
+
+GE_tr <- filter(GE_stock,day<=90)
+GE_te <- filter(GE_stock,day>90)
+GE_fit <- model(GE_tr,Naive = NAIVE(close),
+                Drift = RW(close ~ drift()))
+GE_fc <- forecast(GE_fit, new_data = GE_te)
+autoplot(GE_fc, GE_stock, level = NULL) +
+  autolayer(GE_te, close, colour = "black") +
+  labs(y = "$US", title = "General Electric daily closing stock prices",
+       subtitle = "(Jun. 1, 2024 - Nov. 10, 2024)") +
+  guides(colour = guide_legend(title = "Forecast"))
+select(accuracy(GE_fc, GE_stock),.model,RMSE)
+
+# (c) I trust more the results from (a).
+
+# 2. (a)
+
+y <- scan('H:/Il mio Drive/didattica_2024_2025/DAF2425/rawdata/series.txt')
+y_ti <- tibble('Day' = seq(as_date("2024-01-01"), as_date("2024-04-09"),
+                           by = "1 day"),'Observation' = y)
+y_ts <- as_tsibble(y_ti, index = Day)
+autoplot(y_ts,Observation) + xlab('Time') + ylab('Sales')
+
+# (b)
+
+models <- model(y_ts,'Naive' = NAIVE(Observation),
+                'Drift' = RW(Observation ~ drift()))
+fore <- forecast(models, h = 10)
+autoplot(fore, y_ts, level = NULL) +
+  guides(color = guide_legend(title = "Forecast"))
+
+# (c), (d)
+
+naive_model <- model(y_ts,'Naive'=NAIVE(Observation)) 
+drift_model <- model(y_ts,'Drift'=RW(Observation ~ drift()))
+gg_tsresiduals(naive_model) + ggtitle('Naive, no Box-Cox')
+gg_tsresiduals(drift_model)  + ggtitle('Drift, no Box-Cox')
+naive_fore <- forecast(naive_model, h = 10)
+drift_fore <- forecast(drift_model, h = 10)
+# hilo(naive_fore,level = 95)$`95%`
+# hilo(drift_fore,level = 95)$`95%`
+naive_fore_b <- forecast(naive_model, h = 10, bootstrap=TRUE)
+drift_fore_b <- forecast(drift_model, h = 10, bootstrap=TRUE)
+# hilo(naive_fore_b,level = 95)$`95%`
+# hilo(drift_fore_b,level = 95)$`95%`
+
+guer <- features(y_ts, Observation, features = guerrero)
+lambda <- guer$lambda_guerrero
+ybc = mutate(y_ts,bc=box_cox(y_ts$Observation,lambda))
+autoplot(ybc,bc)
+naive_model_bc <- model(ybc,'Naive'=NAIVE(bc)) 
+drift_model_bc <- model(ybc,'Drift'=RW(bc ~ drift()))
+gg_tsresiduals(naive_model_bc) + ggtitle('Naive after Box-Cox')
+gg_tsresiduals(drift_model_bc) + ggtitle('Drift after Box-Cox') 
+naive_fore_bc <- forecast(naive_model, h = 10)
+drift_fore_bc <- forecast(drift_model, h = 10)
+# hilo(naive_fore_bc,level = 95)$`95%`
+# hilo(drift_fore_bc,level = 95)$`95%`
+
+
+
+
+
+
+
+rm(list=ls())
+library(fpp3)
+library(latex2exp)
+Sys.setlocale(locale = "English") 
+
+# Exercise 1
+
+library(TSA)
+data(hours)
+hours_ts = as_tsibble(hours)
+autoplot(hours_ts)
+gg_lag(hours_ts,geom = 'point')
+autoplot(ACF(hours_ts))
+
+# Exercise 2
+
+set.seed(4476)
+myseries <- filter(aus_retail, `Series ID` == sample(aus_retail$`Series ID`,1))
+autoplot(myseries)
+guer <- features(myseries, Turnover, features = guerrero)
+lambda <- guer$lambda_guerrero
+autoplot(myseries, box_cox(Turnover, lambda)) + labs(y = "", title =
+                                                       TeX(paste0("Retail series with $\\lambda$ = ",round(lambda,2))))
+
+# Exercise 3
+
+library(fma)
+labour_ts <- as_tsibble(labour)
+autoplot(labour_ts)
+gg_season(labour_ts)
+autoplot(ACF(labour_ts))
+guer <- features(labour_ts, value, features = guerrero)
+lambda <- guer$lambda_guerrero
+autoplot(labour_ts, box_cox(value, lambda)) + labs(y = "", title =
+                                                     TeX(paste0("Labour series with $\\lambda$ = ",round(lambda,2))))
+
+
+
+
+
+
+
+
+
+library(readxl)
+library(fpp3)
+retaildata <- read_excel("..\\rawdata\\retail.xlsx", skip=1)
+myData <- select(retaildata,A3349335T)
+date <- seq(as_date('1982-04-01'),as_date('2013-12-01'),by='1 month')
+mySeries <- tsibble('Month' = yearmonth(date), 'Observations'=myData$A3349335T)
+autoplot(mySeries)
+
+gg_season(mySeries)
+
+fitHW <- model(mySeries,multiplicative =
+                 ETS(Observations ~ error("M") + trend("A") + season("M")))
+fc <- forecast(fitHW,h = "3 years")
+autoplot(fc,mySeries, level = NULL) +
+  guides(colour = guide_legend(title = "Forecast"))
+
+fitHWD <- model(mySeries,multiplicative =
+                  ETS(Observations ~ error("M") + trend("Ad") + season("M")))
+fcD <- forecast(fitHWD,h = "3 years")
+autoplot(fcD,mySeries, level = NULL) +
+  guides(colour = guide_legend(title = "Forecast"))
+
+trCV <- stretch_tsibble(mySeries, .init = 300, .step = 1)
+fore <- forecast(model(trCV,multiplicative =
+                         ETS(Observations ~ error("M") + trend("A") + season("M"))))
+RMSEHW <- select(accuracy(fore, mySeries),RMSE)
+print(RMSEHW)
+
+foreD <- forecast(model(trCV,multiplicative =
+                          ETS(Observations ~ error("M") + trend("Ad") + season("M"))))
+RMSEHWd <- select(accuracy(foreD, mySeries),RMSE)
+print(RMSEHWd)
+
+gg_tsresiduals(fitHW) + ggtitle('Holt-Winters')
+
+gg_tsresiduals(fitHWD) + ggtitle('Damped Holt-Winters')
+
+tr <- filter_index(mySeries, . ~ '2010 Q12')
+te <- filter_index(mySeries, '2011 Q1' ~ .)
+fore_trte <- forecast(model(tr,multiplicative =
+                              ETS(Observations ~ error("M") + trend("A") + season("M"))),h=length(te$Observations))
+RMSE_trte <- select(accuracy(fore_trte,te),RMSE)
+
+autoplot(fore_trte,tr,level=NULL)
+
+fore_snaive <- forecast(model(tr,SNAIVE(Observations)),
+                        h=length(te$Observations))
+RMSE_snaive <- select(accuracy(fore_snaive,te),RMSE)
+print(RMSE_snaive)
+
+fits <- model(tr, HW = ETS(Observations ~ error("M") + trend("A") + season("M")),
+              'Seasonal naive' = SNAIVE(Observations))
+fc <- forecast(fits, h = length(te$Observations))
+autoplot(fc, tr, level = NULL) +
+  autolayer(te, colour = "black") +
+  guides(colour = guide_legend(title = "Forecast"))
+
+# According to the RMSE, HW is much better than seasonal naïve. Clearly, the seasonal naïve
+# method is bad because it does not take into account the trend.
